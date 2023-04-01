@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+      "library/**/*.jar",
+      "lib/algs4.jar"
+    ],
+    "java.dependency.packagePresentation": "flat"
+}
