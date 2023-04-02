@@ -1,8 +1,5 @@
-package main.java;
+// package main.java;
 
-// import edu.princeton.cs.algs4.StdIn;
-// import edu.princeton.cs.algs4.StdOut;
-// import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -14,8 +11,6 @@ public class Percolation {
   private int gridVBottom;
   private int openCells;
 
-  // NEED TO UPDATE GRID AND FLATTEN TO BE 1 - N not 0 - N
-
   // constructor to create N x N grid, with all sites blocked
   public Percolation(int n) {
     if (n <= 0) {
@@ -25,7 +20,7 @@ public class Percolation {
     gridN = n;
 
     quWithVPoints = new WeightedQuickUnionUF((n * n) + 2);
-    gridVTop = (n * n);
+    gridVTop = 0;
     gridVBottom = (n * n) + 1;
 
     openCells = 0;
@@ -40,18 +35,25 @@ public class Percolation {
   }
 
   // opens the site (row, col) if it is not already
+  // computer will count row and col from 0
+  // must shift rows as human input will count from 1
+  // to keep this from being confusing
+  // I will not cary the shift into new methods
   public void open(int row, int col) {
+    int shiftRow = row - 1;
+    int shiftCol = col -1;
+
     if (isValid(row, col) && !isOpen(row, col)) {
-      grid[row][col] = true;
-      openCells ++;
+      grid[shiftRow][shiftCol] = true;
+      openCells++;
       int site = gridFlatten(row, col);
 
       // union top
-      if (row == 0) {
+      if (shiftRow == 0) {
         quWithVPoints.union(site, gridVTop);
       }
       // union bottom
-      if (row == (gridN - 1)) {
+      if (shiftRow == (gridN - 1)) {
         quWithVPoints.union(site, gridVBottom);
       }
       // union below
@@ -69,13 +71,19 @@ public class Percolation {
 
   // checks if selected point is contained on the grid
   private boolean isValid(int row, int col) {
-    return ((row >= 0 && row < gridN) && (col >= 0 && col < gridN));
+    int shiftRow = row - 1;
+    int shiftCol = col - 1;
+
+    return ((shiftRow >= 0 && shiftRow < gridN) && (shiftCol >= 0 && shiftCol < gridN));
   }
 
   // is site open?
   public boolean isOpen(int row, int col) {
+    int shiftRow = row - 1;
+    int shiftCol = col - 1;
+
     if (isValid(row, col)) {
-      return grid[row][col];
+      return grid[shiftRow][shiftCol];
     } else {
       throw new IllegalArgumentException("Selected coordinate is outside the matrix");
     }
@@ -83,7 +91,10 @@ public class Percolation {
 
   // convert grid position to weighted quick union data structure (array) position
   private int gridFlatten(int row, int col) {
-    return (gridN * row) + col;
+    int shiftRow = row - 1;
+    int shiftCol = col - 1;
+
+    return (gridN * shiftRow) + shiftCol + 1;
   }
 
   // is site filled?
@@ -106,28 +117,6 @@ public class Percolation {
   }
 
   public static void main(String[] args) {
-    // int n = StdIn.readInt();
-    // int i = 1;
-    // StdOut.println("Created a " + n + " by " + n + " Matrix");
-
-    // Percolation percolation = new Percolation(n);
-
-    // percolation.open(0, 0);
-    // while (!percolation.percolates()) {
-    //   i++;
-    //   StdOut.println("The system does not percolate.");
-
-    //   int randomPointOne = StdRandom.uniformInt(0, n);
-    //   int randomPointTwo = StdRandom.uniformInt(0, n);
-
-    //   StdOut.println("Open Matrix position (" + randomPointOne + ", " + randomPointTwo + ").");
-    //   percolation.open(StdIn.readInt(), StdIn.readInt());
-    // }
-
-    // float percolationThreshold = (float) percolation.openCells / (n * n);
-
-    // StdOut.println("The system now percolates!");
-    // StdOut.println("It took: " + percolation.openCells + " out of " + n * n + " cells and " + i + " rounds.");
-    // StdOut.println("This gives us a percolation threshold of " + percolationThreshold);
+    // this class is used by PercolationStats
   }
 }
