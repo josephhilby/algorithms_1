@@ -1,3 +1,5 @@
+Assignment found at https://coursera.cs.princeton.edu/algs4/assignments/percolation/specification.php
+
 See the Assessment Guide for information on how to interpret this report.
 
 Want to receive personalized feedback on this submission? You can pay to have a teaching assistant read and provide personalized feedback on your submission at https://mooc.codepost.io.
