@@ -1,4 +1,4 @@
-// package main.java;
+package main.java;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
@@ -18,11 +18,9 @@ public class Percolation {
     }
     grid = new boolean[n][n];
     gridN = n;
-
     quWithVPoints = new WeightedQuickUnionUF((n * n) + 2);
     gridVTop = 0;
     gridVBottom = (n * n) + 1;
-
     openCells = 0;
   }
 
