@@ -11,13 +11,14 @@ public class Deque<Item> implements Iterable<Item> {
     Node next;
     Node previous;
   }
+
   // construct an empty deque
   public Deque() {
   }
 
   // is the deque empty?
   public boolean isEmpty() {
-    return first == null;
+    return size() == 0;
   }
 
   // return the number of items on the deque
@@ -28,6 +29,7 @@ public class Deque<Item> implements Iterable<Item> {
   // add the item to the front
   public void addFirst(Item item) {
     Node oldFirst = first;
+    first = new Node();
     first.item = item;
     first.next = oldFirst;
     first.previous = null;
@@ -42,6 +44,7 @@ public class Deque<Item> implements Iterable<Item> {
   // add the item to the back (enqueue)
   public void addLast(Item item) {
     Node oldLast = last;
+    last = new Node();
     last.item = item;
     last.next = null;
     last.previous = oldLast;
@@ -77,10 +80,10 @@ public class Deque<Item> implements Iterable<Item> {
 
   // return an iterator over items in order from front to back
   public Iterator<Item> iterator() {
-    return new ItemIterator();
+    return new ListIterator();
   }
 
-  private class ItemIterator implements Iterator<Item> {
+  private class ListIterator implements Iterator<Item> {
     private Node current = first;
     public boolean hasNext() { return current != null; }
     public void remove() { /* not supported */ }
