@@ -1,6 +1,7 @@
 package main.java;
 
 import java.util.Iterator;
+import edu.princeton.cs.algs4.StdOut;
 
 public class Deque<Item> implements Iterable<Item> {
   private Node first, last;
@@ -96,6 +97,56 @@ public class Deque<Item> implements Iterable<Item> {
 
   // unit testing (required)
   public static void main(String[] args){
+    Deque<String> deque = new Deque<String>();
+    String stringFirst = "first";
+    String stringSecond = "second";
+    String stringSecondLast = "second to last";
+    String stringLast = "last";
 
+    int initialSize = deque.size();
+    StdOut.println("Deque Created Initial Size: " + initialSize);
+
+    deque.addFirst(stringSecond);
+    StdOut.println("String (" + stringSecond + ") added to the beginning of Deque List");
+    deque.addFirst(stringFirst);
+    StdOut.println("String (" + stringFirst + ") added to the beginning of Deque List");
+
+    deque.addLast(stringSecondLast);
+    StdOut.println("String (" + stringSecondLast + ") added to the end of Deque List");
+    deque.addLast(stringLast);
+    StdOut.println("String (" + stringLast + ") added to the end of Deque List");
+
+    Iterator<String> listDeque = deque.iterator();
+    StdOut.println("Iterator created for Deque.");
+    if (listDeque.hasNext()) {
+      StdOut.println("Iterator can read deque AND there is information to read.");
+    } else {
+      StdOut.println("Iterator can't read deque OR there is no information to read.");
+    }
+
+    StdOut.println("First string in deque: " + listDeque.next());
+    StdOut.println("Second string in deque: " + listDeque.next());
+    StdOut.println("Third string in deque: " + listDeque.next());
+    StdOut.println("Fourth string in deque: " + listDeque.next());
+
+    StdOut.println("First string (" + deque.removeFirst() + ") removed from Deque List");
+    StdOut.println("Last string (" + deque.removeLast() + ") removed from Deque List");
+
+    Iterator<String> listDequeTwo = deque.iterator();
+    StdOut.println("New Iterator created for Deque.");
+    if (listDequeTwo.hasNext()) {
+      StdOut.println("Iterator can read deque AND there is information to read.");
+    } else {
+      StdOut.println("Iterator can't read deque OR there is no information to read.");
+    }
+
+    StdOut.println("First string in deque: " + listDequeTwo.next());
+    StdOut.println("Second string in deque: " + listDequeTwo.next());
+
+    if (listDequeTwo.hasNext()) {
+      StdOut.println("Iterator is at the end of the Deque List.");
+    } else {
+      StdOut.println("Somehow the Deque List is still going.");
+    }
   }
 }
