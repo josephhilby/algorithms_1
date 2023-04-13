@@ -5,10 +5,11 @@ import org.junit.Test;
 import main.java.Deque;
 
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsInstanceOf;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsInstanceOf;
+
 import java.util.Iterator;
-// import org.junit.Test;
+import java.util.NoSuchElementException;
 
 public class DequeTest {
   @Test
@@ -49,6 +50,16 @@ public class DequeTest {
     MatcherAssert.assertThat(deque.size(), IsEqual.equalTo(2));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void addNull() {
+    Deque<String> deque = new Deque<String>();
+
+    String nullString = null;
+
+    deque.addFirst(nullString);
+    deque.addLast(nullString);
+  }
+
   @Test
   public void removeFirstString() {
     Deque<String> deque = new Deque<String>();
@@ -87,6 +98,13 @@ public class DequeTest {
     MatcherAssert.assertThat(deque.size(), IsEqual.equalTo(0));
   }
 
+  @Test(expected = NoSuchElementException.class)
+  public void removeWhenEmpty() {
+    Deque<String> deque = new Deque<String>();
+    deque.removeFirst();
+    deque.removeLast();
+  }
+
   @Test
   public void iteratorTest() {
     Deque<String> deque = new Deque<String>();
@@ -102,5 +120,25 @@ public class DequeTest {
     MatcherAssert.assertThat(list.hasNext(), IsEqual.equalTo(true));
     MatcherAssert.assertThat(list.next(), IsEqual.equalTo("second"));
     MatcherAssert.assertThat(list.hasNext(), IsEqual.equalTo(false));
+  }
+
+  @Test(expected = NoSuchElementException.class)
+  public void iteratorNextAtEnd() {
+    Deque<String> deque = new Deque<String>();
+    String stringFirst = "first";
+    deque.addFirst(stringFirst);
+    Iterator<String> list = deque.iterator();
+
+    MatcherAssert.assertThat(list.hasNext(), IsEqual.equalTo(true));
+    MatcherAssert.assertThat(list.next(), IsEqual.equalTo("first"));
+    MatcherAssert.assertThat(list.hasNext(), IsEqual.equalTo(false));
+    list.next();
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void iteratorRemove() {
+    Deque<String> deque = new Deque<String>();
+    Iterator<String> list = deque.iterator();
+    list.remove();
   }
 }

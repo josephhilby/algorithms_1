@@ -2,6 +2,7 @@ package main.java;
 
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdOut;
+import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item> {
   private Node first, last;
@@ -29,6 +30,7 @@ public class Deque<Item> implements Iterable<Item> {
 
   // add the item to the front
   public void addFirst(Item item) {
+    checkParams(item);
     Node oldFirst = first;
     first = new Node();
     first.item = item;
@@ -44,6 +46,7 @@ public class Deque<Item> implements Iterable<Item> {
 
   // add the item to the back (enqueue)
   public void addLast(Item item) {
+    checkParams(item);
     Node oldLast = last;
     last = new Node();
     last.item = item;
@@ -59,10 +62,13 @@ public class Deque<Item> implements Iterable<Item> {
 
   // remove and return the item from the front (dequeue)
   public Item removeFirst() {
+    validate();
     Item oldFirst = first.item;
-    first = first.next;
-    if (isEmpty()) {
-      last = null;
+    if (size() == 1) {
+      nullSet();
+    } else {
+      first = first.next;
+      first.previous = null;
     }
     N--;
     return oldFirst;
@@ -70,10 +76,13 @@ public class Deque<Item> implements Iterable<Item> {
 
   // remove and return the item from the back
   public Item removeLast() {
+    validate();
     Item oldLast = last.item;
-    last = last.previous;
-    if (isEmpty()) {
-      last = null;
+    if (size() == 1) {
+      nullSet();
+    } else {
+      last = last.previous;
+      last.next = null;
     }
     N--;
     return oldLast;
@@ -87,11 +96,36 @@ public class Deque<Item> implements Iterable<Item> {
   private class ListIterator implements Iterator<Item> {
     private Node current = first;
     public boolean hasNext() { return current != null; }
-    public void remove() { /* not supported */ }
+    public void remove() { throw new UnsupportedOperationException(".remove() is not an accepted function. Please try .hasNext() or .next()."); }
     public Item next() {
+      if (current == null) {
+        throw new NoSuchElementException("At the end of the Deque List");
+      }
       Item item = current.item;
       current = current.next;
       return item;
+    }
+  }
+
+  private void validate() {
+    if (isEmpty()) {
+      nullSet();
+      emptyDeque();
+    }
+  }
+
+  private void nullSet() {
+    first = null;
+    last = null;
+  }
+
+  private void emptyDeque() {
+    throw new NoSuchElementException("List is empty.");
+  }
+
+  private void checkParams(Item item) {
+    if (item == null || !(item instanceof Item)) {
+      throw new IllegalArgumentException("Incorrect object type.");
     }
   }
 
@@ -103,18 +137,23 @@ public class Deque<Item> implements Iterable<Item> {
     String stringSecondLast = "second to last";
     String stringLast = "last";
 
-    int initialSize = deque.size();
-    StdOut.println("Deque Created Initial Size: " + initialSize);
+    StdOut.println("Deque List Created");
+    StdOut.println("Initial Size: " + deque.size());
+    StdOut.println("");
 
     deque.addFirst(stringSecond);
     StdOut.println("String (" + stringSecond + ") added to the beginning of Deque List");
     deque.addFirst(stringFirst);
     StdOut.println("String (" + stringFirst + ") added to the beginning of Deque List");
+    StdOut.println("Deque List Size: " + deque.size());
+    StdOut.println("");
 
     deque.addLast(stringSecondLast);
     StdOut.println("String (" + stringSecondLast + ") added to the end of Deque List");
     deque.addLast(stringLast);
     StdOut.println("String (" + stringLast + ") added to the end of Deque List");
+    StdOut.println("Deque List Size: " + deque.size());
+    StdOut.println("");
 
     Iterator<String> listDeque = deque.iterator();
     StdOut.println("Iterator created for Deque.");
@@ -123,30 +162,43 @@ public class Deque<Item> implements Iterable<Item> {
     } else {
       StdOut.println("Iterator can't read deque OR there is no information to read.");
     }
+    StdOut.println("");
 
     StdOut.println("First string in deque: " + listDeque.next());
     StdOut.println("Second string in deque: " + listDeque.next());
     StdOut.println("Third string in deque: " + listDeque.next());
     StdOut.println("Fourth string in deque: " + listDeque.next());
+    StdOut.println("");
+
+    if (listDeque.hasNext()) {
+      StdOut.println("Somehow the Deque List is still going.");
+    } else {
+      StdOut.println("Iterator is at the end of the Deque List.");
+    }
+    StdOut.println("");
 
     StdOut.println("First string (" + deque.removeFirst() + ") removed from Deque List");
     StdOut.println("Last string (" + deque.removeLast() + ") removed from Deque List");
+    StdOut.println("Deque List Size: " + deque.size());
+    StdOut.println("");
 
     Iterator<String> listDequeTwo = deque.iterator();
     StdOut.println("New Iterator created for Deque.");
     if (listDequeTwo.hasNext()) {
-      StdOut.println("Iterator can read deque AND there is information to read.");
+      StdOut.println("New Iterator can read deque AND there is information to read.");
     } else {
-      StdOut.println("Iterator can't read deque OR there is no information to read.");
+      StdOut.println("New Iterator can't read deque OR there is no information to read.");
     }
+    StdOut.println("");
 
     StdOut.println("First string in deque: " + listDequeTwo.next());
     StdOut.println("Second string in deque: " + listDequeTwo.next());
+    StdOut.println("");
 
     if (listDequeTwo.hasNext()) {
-      StdOut.println("Iterator is at the end of the Deque List.");
-    } else {
       StdOut.println("Somehow the Deque List is still going.");
+    } else {
+      StdOut.println("Iterator is at the end of the New Deque List.");
     }
   }
 }
