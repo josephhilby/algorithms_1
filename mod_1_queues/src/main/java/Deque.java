@@ -96,7 +96,11 @@ public class Deque<Item> implements Iterable<Item> {
   private class ListIterator implements Iterator<Item> {
     private Node current = first;
     public boolean hasNext() { return current != null; }
-    public void remove() { throw new UnsupportedOperationException(".remove() is not an accepted function. Please try .hasNext() or .next()."); }
+    public void remove() {
+      throw new UnsupportedOperationException(
+        ".remove() is not an accepted function. Please try .hasNext() or .next()."
+      );
+    }
     public Item next() {
       if (current == null) {
         throw new NoSuchElementException("At the end of the Deque List");
