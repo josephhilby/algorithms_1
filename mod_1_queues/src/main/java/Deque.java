@@ -128,7 +128,7 @@ public class Deque<Item> implements Iterable<Item> {
   }
 
   private void checkParams(Item item) {
-    if (item == null || !(item instanceof Item)) {
+    if (item == null) {
       throw new IllegalArgumentException("Incorrect object type.");
     }
   }
