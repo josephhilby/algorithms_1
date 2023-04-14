@@ -101,13 +101,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
   //   public boolean hasNext(){ return n > 0; }
   //   public void remove() {
-  //     throw new UnsupportedOperationException(
-  //       ".remove() is not an accepted function. Please try .hasNext() or .next()."
+  //     throw new UnsupportedOperationException(".remove() is not an accepted function. Please try .hasNext() or .next()."
   //     );
   //   }
   //   public Item next() {
   //     if (i == 0) {
-  //       throw new NoSuchElementException("Stack is empty");
+  //       throw new NoSuchElementException("At the end of the stack.");
   //     }
   //     i--;
   //     n--;
