@@ -9,8 +9,8 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsInstanceOf;
 
-import java.util.Comparator;
-import java.util.Arrays;
+// import java.util.Comparator;
+// import java.util.Arrays;
 
 public class BruteCollinearPointsTest {
   @Test
@@ -41,11 +41,11 @@ public class BruteCollinearPointsTest {
   public void findSegmentsN11() {
     Point[] points = new Point[10];
     points[0] = new Point(0, 0);
-    points[1] = new Point(1, 1);
-    points[2] = new Point(2, 2);
-    points[3] = new Point(4, 4);
-    points[4] = new Point(5, 5);
-    points[5] = new Point(1, 3);
+    points[1] = new Point(1, 3);
+    points[2] = new Point(1, 1);
+    points[3] = new Point(2, 2);
+    points[4] = new Point(4, 4);
+    points[5] = new Point(5, 5);
     points[6] = new Point(3, 1);
     points[7] = new Point(4, 0);
     points[8] = new Point(5, 0);
