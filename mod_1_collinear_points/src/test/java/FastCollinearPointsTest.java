@@ -3,7 +3,7 @@ package test.java;
 import org.junit.Test;
 
 import main.java.Point;
-import main.java.BruteCollinearPoints;
+import main.java.FastCollinearPoints;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
@@ -12,17 +12,17 @@ import org.hamcrest.core.IsInstanceOf;
 // import java.util.Comparator;
 // import java.util.Arrays;
 
-public class BruteCollinearPointsTest {
+public class FastCollinearPointsTest {
   @Test
-  public void createBruteCollinearPoints() {
+  public void createFastCollinearPoints() {
     Point[] points = new Point[4];
     points[0] = new Point(1, 1);
     points[1] = new Point(2, 2);
     points[2] = new Point(3, 3);
     points[3] = new Point(4, 4);
 
-    BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
-    MatcherAssert.assertThat(bruteCollinearPoints, IsInstanceOf.instanceOf(BruteCollinearPoints.class));
+    FastCollinearPoints fastCollinearPoints = new FastCollinearPoints(points);
+    MatcherAssert.assertThat(fastCollinearPoints, IsInstanceOf.instanceOf(FastCollinearPoints.class));
   }
 
   @Test
@@ -33,8 +33,8 @@ public class BruteCollinearPointsTest {
     points[2] = new Point(3, 3);
     points[3] = new Point(4, 4);
 
-    BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
-    MatcherAssert.assertThat(bruteCollinearPoints.numberOfSegments(), IsEqual.equalTo(1));
+    FastCollinearPoints fastCollinearPoints = new FastCollinearPoints(points);
+    MatcherAssert.assertThat(fastCollinearPoints.numberOfSegments(), IsEqual.equalTo(1));
   }
 
   @Test
@@ -51,8 +51,8 @@ public class BruteCollinearPointsTest {
     points[8] = new Point(5, 0);
     points[9] = new Point(1, 5);
 
-    BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
-    MatcherAssert.assertThat(bruteCollinearPoints.numberOfSegments(), IsEqual.equalTo(2));
+    FastCollinearPoints fastCollinearPoints = new FastCollinearPoints(points);
+    MatcherAssert.assertThat(fastCollinearPoints.numberOfSegments(), IsEqual.equalTo(2));
   }
 
   @Test
@@ -65,8 +65,8 @@ public class BruteCollinearPointsTest {
     points[4] = new Point(1234, 5678);
     points[5] = new Point(14000, 10000);
 
-    BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
-    MatcherAssert.assertThat(bruteCollinearPoints.numberOfSegments(), IsEqual.equalTo(1));
+    FastCollinearPoints fastCollinearPoints = new FastCollinearPoints(points);
+    MatcherAssert.assertThat(fastCollinearPoints.numberOfSegments(), IsEqual.equalTo(1));
   }
 
   @Test
@@ -81,7 +81,7 @@ public class BruteCollinearPointsTest {
     points[6] = new Point(14000, 15000);
     points[7] = new Point(6000, 7000);
 
-    BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
-    MatcherAssert.assertThat(bruteCollinearPoints.numberOfSegments(), IsEqual.equalTo(2));
+    FastCollinearPoints fastCollinearPoints = new FastCollinearPoints(points);
+    MatcherAssert.assertThat(fastCollinearPoints.numberOfSegments(), IsEqual.equalTo(2));
   }
 }

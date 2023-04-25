@@ -42,6 +42,18 @@ public class LineSegment {
     p.drawTo(q);
   }
 
+  public Point getP() {
+    return p;
+  }
+
+  public Point getQ() {
+    return q;
+  }
+
+  public double getSlope() {
+    return p.slopeTo(q);
+  }
+
   /**
    * Returns a string representation of this line segment
    * This method is provide for debugging;

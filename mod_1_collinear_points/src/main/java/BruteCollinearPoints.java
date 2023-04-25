@@ -1,10 +1,10 @@
 package main.java;
 
-// import java.util.Comparator;
 import java.util.Arrays;
-// import javax.sound.sampled.Line;
-// import edu.princeton.cs.algs4.StdDraw;
-// import edu.princeton.cs.algs4.StdOut;
+
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdDraw;
 
 public class BruteCollinearPoints {
   private int lineSegmentsN = 0;
@@ -26,19 +26,32 @@ public class BruteCollinearPoints {
     lineSegmentsN++;
   }
 
+  private boolean isPreviousLineSegment(Point p, double slope) {
+    int N = lineSegmentsN - 1;
+    if (lineSegments[N].getSlope() == slope && lineSegments[N].getP().compareTo(p) == -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // finds all line segments containing 4 points
   public BruteCollinearPoints(Point[] points) {
     lineSegments = new LineSegment[1];
     int N = points.length;
     Arrays.sort(points);
     for (int i = 0; i < N; i++) {
-      for (int j = i + 1; j < N - 3; j++) {
+      for (int j = i + 1; j < N - 2; j++) {
         double ij = points[i].slopeTo(points[j]);
-        for (int k = j + 1; k < N - 2; k++) {
-          double ik = points[i].slopeTo(points[k]);
-          for (int l = k + 1; l < N - 1; l++) {
-            double il = points[i].slopeTo(points[l]);
-            if (ij == ik && ik == il) {
+        for (int k = j + 1; k < N - 1; k++) {
+          double jk = points[j].slopeTo(points[k]);
+          for (int l = k + 1; l < N; l++) {
+            double kl = points[i].slopeTo(points[l]);
+            if (ij == jk && jk == kl) {
+              double il = points[i].slopeTo(points[l]);
+              if (lineSegmentsN > 0 && isPreviousLineSegment(points[i], il)) {
+                lineSegmentsN--;
+              }
               push(new LineSegment(points[i], points[l]));
             }
           }
@@ -57,6 +70,45 @@ public class BruteCollinearPoints {
     return lineSegments;
   }
 
-  public static void main (String[] args) {
+  public static void main(String[] args) {
+    Point[] points = new Point[7];
+    points[0] = new Point(19000, 10000);
+    points[1] = new Point(18000, 10000);
+    points[2] = new Point(32000, 10000);
+    points[3] = new Point(21000, 10000);
+    points[4] = new Point(1234, 5678);
+    points[5] = new Point(15000, 8000);
+    points[6] = new Point(14000, 10000);
+
+    BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
+    StdOut.println(bruteCollinearPoints.numberOfSegments());
+    StdOut.println(bruteCollinearPoints.segments());
+
+    // // read the n points from a file
+    // In in = new In(args[0]);
+    // int n = in.readInt();
+    // Point[] points = new Point[n];
+    // for (int i = 0; i < n; i++) {
+    //   int x = in.readInt();
+    //   int y = in.readInt();
+    //   points[i] = new Point(x, y);
+    // }
+
+    // // draw the points
+    // StdDraw.enableDoubleBuffering();
+    // StdDraw.setXscale(0, 32768);
+    // StdDraw.setYscale(0, 32768);
+    // for (Point p : points) {
+    //   p.draw();
+    // }
+    // StdDraw.show();
+
+    // // print and draw the line segments
+    // BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+    // for (LineSegment segment : collinear.segments()) {
+    //   StdOut.println(segment);
+    //   segment.draw();
+    // }
+    // StdDraw.show();
   }
 }

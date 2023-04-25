@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class PointTest {
   @Test
-  public void createDeque() {
+  public void createPoint() {
     Point point = new Point(1, 1);
     MatcherAssert.assertThat(point, IsInstanceOf.instanceOf(Point.class));
 
