@@ -11,6 +11,20 @@ public class FastCollinearPoints {
   private int lineSegmentsN = 0;
   private LineSegment[] lineSegments;
 
+  private void checkPoints(Point[] points) {
+    if (points == null) {
+      throw new IllegalArgumentException("Null points array.");
+    }
+    for (int i = 0; i < points.length - 1; i++) {
+      if (points[i].compareTo(points[i + 1]) == 0) {
+        throw new IllegalArgumentException("Duplicate points found.");
+      }
+      if (points[i] == null) {
+        throw new IllegalArgumentException("Null point found.");
+      }
+    }
+  }
+
   private void resize(int capacity) {
     LineSegment[] copy = new LineSegment[capacity];
     for (int i = 0; i < lineSegments.length; i++) {
@@ -29,6 +43,7 @@ public class FastCollinearPoints {
 
   // finds all line segments containing 4 or more points
   public FastCollinearPoints(Point[] points) {
+    checkPoints(points);
     lineSegments = new LineSegment[1];
     int N = points.length;
     int count = 0;

@@ -63,7 +63,7 @@ public class PointTest {
     Point point5 = new Point(0 , 0);
 
     Point[] points = { point2, point3, point4, point5 };
-    Point[] expected = { point4, point2, point5, point3 };
+    Point[] expected = { point3, point2, point5, point4 };
 
     Comparator<Point> point1Comparator = point1.slopeOrder();
     Arrays.sort(points, point1Comparator);

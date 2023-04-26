@@ -75,7 +75,7 @@ public class Point implements Comparable<Point> {
     } else if (this.y < that.y || (this.y == that.y && this.x < that.x)) {
       return -1;
     } else {
-      return 1;
+      return +1;
     }
   }
 
@@ -105,9 +105,21 @@ public class Point implements Comparable<Point> {
       double slope2 = this.slopeTo(p2);
 
       if (slope1 < slope2) {
-        return 1;
-      } else if (slope1 > slope2) {
         return -1;
+      } else if (slope1 > slope2) {
+        return +1;
+      } else {
+        return 0;
+      }
+    };
+  }
+
+  public Comparator<Point> pointOrder() {
+    return (p1, p2) -> {
+      if (p1.compareTo(p2) < 0) {
+        return -1;
+      } else if (p1.compareTo(p2) > 0) {
+        return +1;
       } else {
         return 0;
       }
@@ -115,19 +127,5 @@ public class Point implements Comparable<Point> {
   }
 
   public static void main (String[] args) {
-    Point point1 = new Point(1, 1);
-
-    Point point2 = new Point(2, 2);
-    Point point3 = new Point(2, 1);
-    Point point4 = new Point(1, 2);
-    Point point5 = new Point(0, 0);
-    Point[] points = { point2, point3, point4, point5 };
-    Point[] expected = { point4, point2, point5, point3 };
-
-    Comparator<Point> point1Comparator = point1.slopeOrder();
-    Arrays.sort(points, point1Comparator);
-
-    StdOut.println(Arrays.toString(points));
-    StdOut.println(Arrays.toString(expected));
   }
 }
