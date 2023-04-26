@@ -26,11 +26,11 @@ public class PointTest {
     Point point2 = new Point(2, 2);
     Point point3 = new Point(2, 1);
 
-    MatcherAssert.assertThat(point1.compareTo(point2), IsEqual.equalTo(1));
-    MatcherAssert.assertThat(point2.compareTo(point1), IsEqual.equalTo(-1));
+    MatcherAssert.assertThat(point1.compareTo(point2), IsEqual.equalTo(-1));
+    MatcherAssert.assertThat(point2.compareTo(point1), IsEqual.equalTo(1));
 
-    MatcherAssert.assertThat(point1.compareTo(point3), IsEqual.equalTo(1));
-    MatcherAssert.assertThat(point3.compareTo(point1), IsEqual.equalTo(-1));
+    MatcherAssert.assertThat(point1.compareTo(point3), IsEqual.equalTo(-1));
+    MatcherAssert.assertThat(point3.compareTo(point1), IsEqual.equalTo(1));
   }
 
   @Test
@@ -69,5 +69,13 @@ public class PointTest {
     Arrays.sort(points, point1Comparator);
 
     MatcherAssert.assertThat(Arrays.toString(points), IsEqual.equalTo(Arrays.toString(expected)));
+  }
+
+  @Test
+  public void sadPath() {
+    Point point1 = new Point(1, 1);
+    Point point2 = new Point(1, 1);
+
+    MatcherAssert.assertThat(point1.slopeTo(point2), IsEqual.equalTo(Double.NEGATIVE_INFINITY));
   }
 }

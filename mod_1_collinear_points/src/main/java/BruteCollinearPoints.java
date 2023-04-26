@@ -8,6 +8,9 @@ import edu.princeton.cs.algs4.StdDraw;
 
 public class BruteCollinearPoints {
   private int lineSegmentsN = 0;
+  private Point lastP;
+  private Point lastL;
+  private double lastSlope;
   private LineSegment[] lineSegments;
 
   private void resize(int capacity) {
@@ -26,9 +29,8 @@ public class BruteCollinearPoints {
     lineSegmentsN++;
   }
 
-  private boolean isPreviousLineSegment(Point p, double slope) {
-    int N = lineSegmentsN - 1;
-    if (lineSegments[N].getSlope() == slope && lineSegments[N].getP().compareTo(p) == -1) {
+  private boolean isPreviousLineSegment(Point argP, Point argL, double slope) {
+    if (lastSlope == slope && (lastP.compareTo(argP) == 0 || lastL.compareTo(argL) == 0)) {
       return true;
     } else {
       return false;
@@ -49,10 +51,13 @@ public class BruteCollinearPoints {
             double kl = points[i].slopeTo(points[l]);
             if (ij == jk && jk == kl) {
               double il = points[i].slopeTo(points[l]);
-              if (lineSegmentsN > 0 && isPreviousLineSegment(points[i], il)) {
+              if (lineSegmentsN > 0 && isPreviousLineSegment(points[i], points[l], il)) {
                 lineSegmentsN--;
               }
               push(new LineSegment(points[i], points[l]));
+              lastP = points[i];
+              lastL = points[l];
+              lastSlope = il;
             }
           }
         }
@@ -71,6 +76,24 @@ public class BruteCollinearPoints {
   }
 
   public static void main(String[] args) {
+    // Point[] points = new Point[10];
+    // points[0] = new Point(0, 0);
+    // points[1] = new Point(1, 3);
+    // points[2] = new Point(1, 1);
+    // points[3] = new Point(2, 2);
+    // points[4] = new Point(4, 4);
+    // points[5] = new Point(5, 5);
+    // points[6] = new Point(3, 1);
+    // points[7] = new Point(4, 0);
+    // points[8] = new Point(5, 0);
+    // points[9] = new Point(1, 5);
+
+    // BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
+    // LineSegment[] lineSegments = bruteCollinearPoints.segments();
+    // for (int i = 0; i < lineSegments.length; i++) {
+    //   StdOut.println(lineSegments[i]);
+    // }
+    // StdOut.println(bruteCollinearPoints.numberOfSegments());
 
     // read the n points from a file
     In in = new In(args[0]);

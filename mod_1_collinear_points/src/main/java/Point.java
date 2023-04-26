@@ -70,10 +70,12 @@ public class Point implements Comparable<Point> {
    * The compareTo() method should compare the invoking point and argument point by their y-coordinates, breaking ties by their x-coordinates.
    */
   public int compareTo(Point that) {
-    if (this.y < that.y || (this.y == that.y && this.x < that.x)) {
-      return 1;
-    } else {
+    if (this.x == that.x && this.y == that.y) {
+      return 0;
+    } else if (this.y < that.y || (this.y == that.y && this.x < that.x)) {
       return -1;
+    } else {
+      return 1;
     }
   }
 
@@ -88,7 +90,7 @@ public class Point implements Comparable<Point> {
     if (slope == Double.NEGATIVE_INFINITY) {
       slope = Double.POSITIVE_INFINITY;
     }
-    if (this == that) {
+    if (this.x == that.x && this.y == that.y) {
       slope = Double.NEGATIVE_INFINITY;
     }
     return slope;
