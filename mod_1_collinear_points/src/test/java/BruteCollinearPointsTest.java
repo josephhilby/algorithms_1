@@ -69,6 +69,26 @@ public class BruteCollinearPointsTest {
     MatcherAssert.assertThat(bruteCollinearPoints.numberOfSegments(), IsEqual.equalTo(1));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testSegmentsWithNull() {
+    Point[] points = new Point[6];
+    points[0] = new Point(19000, 10000);
+    points[1] = new Point(18000, 10000);
+    points[2] = new Point(32000, 10000);
+    points[3] = new Point(21000, 10000);
+    points[4] = null;
+    points[5] = new Point(14000, 10000);
+
+    new BruteCollinearPoints(points);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testNull() {
+    Point[] points = null;
+
+    new BruteCollinearPoints(points);
+  }
+
   @Test
   public void testSegmentsN8() {
     Point[] points = new Point[8];

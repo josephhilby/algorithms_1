@@ -11,10 +11,8 @@
 package main.java;
 
 import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Comparator;
-import java.util.Arrays;
 
 public class Point implements Comparable<Point> {
   // x-coordinate of this point
@@ -107,18 +105,6 @@ public class Point implements Comparable<Point> {
       if (slope1 < slope2) {
         return -1;
       } else if (slope1 > slope2) {
-        return +1;
-      } else {
-        return 0;
-      }
-    };
-  }
-
-  public Comparator<Point> pointOrder() {
-    return (p1, p2) -> {
-      if (p1.compareTo(p2) < 0) {
-        return -1;
-      } else if (p1.compareTo(p2) > 0) {
         return +1;
       } else {
         return 0;
