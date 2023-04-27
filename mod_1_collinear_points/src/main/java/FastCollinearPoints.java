@@ -58,32 +58,37 @@ public class FastCollinearPoints {
   public FastCollinearPoints(Point[] points) {
     checkNullPoints(points);
     Point[] pointsCopy = points.clone();
+    int N = pointsCopy.length;
     Arrays.sort(pointsCopy);
     checkDupPoints(pointsCopy);
 
     lineSegments = new LineSegment[1];
-    int N = pointsCopy.length;
-    int count = 0;
 
     for (int i = 0; i < N; i++) {
+      int count = 0;
       int pointsAfterI = i + 1;
       Comparator<Point> comparator = pointsCopy[i].slopeOrder();
-      Point[] pointsCopySorted = Arrays.copyOfRange(points, pointsAfterI, N);
+      Point[] pointsCopySorted = Arrays.copyOfRange(pointsCopy, pointsAfterI, N);
+      int M = pointsCopySorted.length;
       Arrays.sort(pointsCopySorted, comparator);
 
-      for (int j = 0; j < N - pointsAfterI; j++) {
-        if (j == pointsCopySorted.length - 1) {
-          if (count >= 2) {
-            push(new LineSegment(points[i], pointsCopySorted[j]));
+      for (int j = 1; j < M; j++) {
+        double j1 = pointsCopy[i].slopeTo(pointsCopySorted[j - 1]);
+        double ij = pointsCopy[i].slopeTo(pointsCopySorted[j]);
+        if (j == M - 1) {
+          if (count >= 1 && ij == j1) {
+            push(new LineSegment(pointsCopy[i], pointsCopySorted[j]));
+          } else if (count >= 2 && ij != j1) {
+            push(new LineSegment(pointsCopy[i], pointsCopySorted[j - 1]));
           }
           count = 0;
-        } else if (count >= 2 && points[i].slopeTo(pointsCopySorted[j]) != points[i].slopeTo(pointsCopySorted[j + 1])) {
-          push(new LineSegment(points[i], pointsCopySorted[j]));
+        } else if (ij != j1) {
+          if (count >= 2) {
+            push(new LineSegment(pointsCopy[i], pointsCopySorted[j - 1]));
+          }
           count = 0;
-        } else if (points[i].slopeTo(pointsCopySorted[j]) == points[i].slopeTo(pointsCopySorted[j + 1])) {
-          count++;
         } else {
-          count = 0;
+          count++;
         }
       }
     }
@@ -101,17 +106,15 @@ public class FastCollinearPoints {
   }
 
   public static void main(String[] args) {
-    Point[] points = new Point[10];
-    points[0] = new Point(0, 0);
-    points[1] = new Point(1, 3);
-    points[2] = new Point(1, 1);
-    points[3] = new Point(2, 2);
-    points[4] = new Point(4, 4);
-    points[5] = new Point(5, 5);
-    points[6] = new Point(3, 1);
-    points[7] = new Point(4, 0);
-    points[8] = new Point(5, 0);
-    points[9] = new Point(1, 5);
+    Point[] points = new Point[8];
+    points[0] = new Point(10000, 0);
+    points[1] = new Point(0, 10000);
+    points[2] = new Point(3000, 7000);
+    points[3] = new Point(7000, 3000);
+    points[4] = new Point(20000, 21000);
+    points[5] = new Point(3000, 4000);
+    points[6] = new Point(14000, 15000);
+    points[7] = new Point(6000, 7000);
 
     FastCollinearPoints fastCollinearPoints = new FastCollinearPoints(points);
     LineSegment[] lineSegments = fastCollinearPoints.segments();
