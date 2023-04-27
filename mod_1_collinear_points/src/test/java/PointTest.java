@@ -55,15 +55,16 @@ public class PointTest {
 
   @Test
   public void slopeOrder() {
-    Point point1 = new Point(1, 1);
+    Point point1 = new Point(0, 0);
 
-    Point point2 = new Point(2, 2);
-    Point point3 = new Point(2, 1);
-    Point point4 = new Point(1, 2);
-    Point point5 = new Point(0 , 0);
+    Point point2 = new Point(0, 3);
+    Point point3 = new Point(1, 2);
+    Point point4 = new Point(1, 1);
+    Point point5 = new Point(2, 1);
+    Point point6 = new Point(3, 0);
 
-    Point[] points = { point2, point3, point4, point5 };
-    Point[] expected = { point3, point2, point5, point4 };
+    Point[] points = { point6, point5, point3, point2, point4 };
+    Point[] expected = { point2, point3, point4, point5, point6 };
 
     Comparator<Point> point1Comparator = point1.slopeOrder();
     Arrays.sort(points, point1Comparator);

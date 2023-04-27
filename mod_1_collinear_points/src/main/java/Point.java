@@ -103,9 +103,9 @@ public class Point implements Comparable<Point> {
       double slope2 = this.slopeTo(p2);
 
       if (slope1 < slope2) {
-        return -1;
-      } else if (slope1 > slope2) {
         return +1;
+      } else if (slope1 > slope2) {
+        return -1;
       } else {
         return 0;
       }
