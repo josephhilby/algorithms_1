@@ -16,6 +16,8 @@ public class BoardTest {
   public void createBoard() {
     Board board = new Board(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}});
     MatcherAssert.assertThat(board, IsInstanceOf.instanceOf(Board.class));
+    MatcherAssert.assertThat(board.dimension(), IsEqual.equalTo(3));
+    MatcherAssert.assertThat(board.isGoal(), IsEqual.equalTo(true));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -105,5 +107,6 @@ public class BoardTest {
     MatcherAssert.assertThat(neighbors.next(), IsEqual.equalTo(new Board(new int[][]{{1, 2, 3},
                                                                                      {4, 6, 0},
                                                                                      {7, 8, 5}})));
+    MatcherAssert.assertThat(neighbors.hasNext(), IsEqual.equalTo(false));
   }
 }

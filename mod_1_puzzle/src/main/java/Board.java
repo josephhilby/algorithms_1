@@ -1,10 +1,10 @@
 package main.java;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Stack;
 
 public class Board {
-  private int[][] tiles;
+  public int[][] tiles;
+  private int[][] goal;
   private int N;
 
   // create a board from an n-by-n array of tiles,
@@ -19,6 +19,16 @@ public class Board {
     } else {
       N = tiles.length;
       this.tiles = tiles;
+      this.goal = new int[N][N];
+      for (int row = 0; row < N; row++) {
+        for (int col = 0; col < N; col++) {
+          if (row == N - 1 && col == N - 1) {
+            goal[row][col] = 0;
+          } else {
+            goal[row][col] = (row * N) + col + 1;
+          }
+        }
+      }
     }
   }
 
@@ -80,7 +90,7 @@ public class Board {
 
   // is this board the goal board?
   public boolean isGoal() {
-    return false;
+    return Arrays.deepEquals(tiles, goal);
   }
 
   // does this board equal y?
@@ -94,7 +104,7 @@ public class Board {
     return (this.N == that.N && Arrays.deepEquals(this.tiles, that.tiles));
   }
 
-  private int[] findZero() {
+  public int[] findZero() {
     int[] zero = new int[2];
     for (int row = 0; row < N; row++) {
       for (int col = 0; col < N; col++) {
@@ -153,6 +163,7 @@ public class Board {
   }
 
   // a board that is obtained by exchanging any pair of tiles
+  // this is taken care of by copyTiles function
   public Board twin() {
     return null;
   }
