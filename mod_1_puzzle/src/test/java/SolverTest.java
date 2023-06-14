@@ -27,6 +27,7 @@ public class SolverTest {
     Board board = new Board(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}});
     Solver solver = new Solver(board);
     SearchNode searchNode = solver.new SearchNode(board, null);
+
     MatcherAssert.assertThat(searchNode, IsInstanceOf.instanceOf(SearchNode.class));
     MatcherAssert.assertThat(searchNode.board, IsEqual.equalTo(board));
     MatcherAssert.assertThat(searchNode.previous, IsEqual.equalTo(null));
@@ -45,19 +46,18 @@ public class SolverTest {
     SearchNode nodeTwo = solver.new SearchNode(boardTwo, initialNode);
 
     MinPQ<SearchNode> boardPQ = new MinPQ<>(4);
+
     boardPQ.insert(nodeOne);
     MatcherAssert.assertThat(boardPQ.size(), IsEqual.equalTo(1));
     MatcherAssert.assertThat(boardPQ.min(), IsEqual.equalTo(nodeOne));
-    MatcherAssert.assertThat(boardPQ.min().board.tiles, IsEqual.equalTo(
-        new int[][] { { 4, 1, 3 }, { 0, 2, 5 }, { 7, 8, 6 } }));
+    MatcherAssert.assertThat(boardPQ.min().board.tiles, IsEqual.equalTo(new int[][]{{4, 1, 3}, {0, 2, 5}, {7, 8, 6}}));
 
-    MatcherAssert.assertThat(nodeTwo.board.tiles, IsEqual.equalTo(
-        new int[][] { { 1, 0, 3 }, { 4, 2, 5 }, { 7, 8, 6 } }));
+    MatcherAssert.assertThat(nodeTwo.board.tiles, IsEqual.equalTo(new int[][]{{1, 0, 3}, {4, 2, 5}, {7, 8, 6}}));
+
     boardPQ.insert(nodeTwo);
     MatcherAssert.assertThat(boardPQ.size(), IsEqual.equalTo(2));
     MatcherAssert.assertThat(boardPQ.min(), IsEqual.equalTo(nodeTwo));
-    MatcherAssert.assertThat(boardPQ.min().board.tiles, IsEqual.equalTo(
-        new int[][] { { 1, 0, 3 }, { 4, 2, 5 }, { 7, 8, 6 } }));
+    MatcherAssert.assertThat(boardPQ.min().board.tiles, IsEqual.equalTo(new int[][]{{1, 0, 3}, {4, 2, 5}, {7, 8, 6}}));
   }
 
   @Test(expected = IllegalArgumentException.class)

@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Stack;
 
 public class Board {
-  public int[][] tiles;
+  public final int[][] tiles;
   private int[][] goal;
   private int N;
 
