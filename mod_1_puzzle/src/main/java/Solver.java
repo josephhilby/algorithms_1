@@ -19,18 +19,20 @@ public class Solver {
     }
     this.initial = initial;
 
-    // MinPQ<SearchNode> boardPQ = new MinPQ<>(4);
-    // current = new SearchNode(initial, null);
+    MinPQ<SearchNode> boardPQ = new MinPQ<>(4);
+    current = new SearchNode(initial, null);
 
-    // while (!current.board.isGoal()) {
-    //   Iterator<Board> possibleMoves = current.board.neighbors().iterator();
-    //   while (possibleMoves.hasNext()) {
-    //     Board move = possibleMoves.next();
-    //     SearchNode node = new SearchNode(move, current);
-    //     boardPQ.insert(node);
-    //   }
-    //   current = boardPQ.delMin();
-    // }
+    if (isSolvable()) {
+      while (!current.board.isGoal()) {
+        Iterator<Board> possibleMoves = current.board.neighbors().iterator();
+        while (possibleMoves.hasNext()) {
+          Board move = possibleMoves.next();
+          SearchNode node = new SearchNode(move, current);
+          boardPQ.insert(node);
+        }
+        current = boardPQ.delMin();
+      }
+    }
   }
 
   // counts the number of inversions for a given number on a given board
@@ -136,9 +138,10 @@ public class Solver {
     // for (int i = 0; i < n; i++)
     //   for (int j = 0; j < n; j++)
     //     tiles[i][j] = in.readInt();
-    int[][] tiles = { { 0, 1, 3 },
-                      { 4, 2, 5 },
-                      { 7, 8, 6 }};
+    // int[][] tiles = { { 0, 1, 3 },
+    //                   { 4, 2, 5 },
+    //                   { 7, 8, 6 }};
+    int[][] tiles = { {1, 2, 3}, {4, 5, 6}, {8, 7, 0} };
     Board initial = new Board(tiles);
 
     // solve the puzzle
